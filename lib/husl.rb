@@ -23,6 +23,11 @@ module Husl
   KAPPA = 903.2962962
   EPSILON = 0.0088564516
   
+  def rgb_to_xyz arr
+    rgbl = arr.map { |val| to_linear(val) }
+    M_INV.map { |i| dot_product(i, rgbl) }
+  end
+  
   def xyz_to_luv arr
     x, y, z = arr
     l = f(y)
@@ -52,5 +57,13 @@ module Husl
 
   def f t
     t > EPSILON ? 116 * ((t / REF_Y) ** (1.0 / 3.0)) - 16.0 : t / REF_Y * KAPPA
+  end
+  
+  def to_linear c
+    c > 0.04045 ? ((c + 0.055) / 1.055) ** 2.4 : c / 12.92
+  end
+  
+  def dot_product a, b
+    a.zip(b).map { |i, j| i * j }.inject(:+)
   end
 end
