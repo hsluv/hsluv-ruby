@@ -18,6 +18,8 @@ describe Husl do
       test_xyz = values["xyz"]
       test_luv = values["luv"]
       test_lch = values["lch"]
+      test_husl = values["husl"]
+      test_huslp = values["huslp"]
 
       context "should convert #{hex}" do
         it "from rgb to xyz" do
@@ -30,6 +32,14 @@ describe Husl do
 
         it "from luv to lch" do
           expect(deviation(Husl.luv_to_lch(test_luv), test_lch)).to eq true
+        end
+
+        it "from lch to husl" do
+          expect(deviation(Husl.lch_to_husl(test_lch), test_husl)).to eq true
+        end
+
+        it "from lch to huslp" do
+          expect(deviation(Husl.lch_to_huslp(test_lch), test_huslp)).to eq true
         end
       end
 

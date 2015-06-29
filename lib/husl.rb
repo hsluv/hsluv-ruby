@@ -51,8 +51,86 @@ module Husl
     [l, c, h]
   end
 
+  def lch_to_husl arr
+    l, c, h = arr
+    return [h, 0.0, 100.0] if l > 99.9999999
+    return [h, 0.0, 0.0] if l < 0.00000001
+
+    mx = max_chroma_for(l, h)
+    s = c / mx * 100.0
+
+    [h, s, l]
+  end
+
+  def lch_to_huslp arr
+    l, c, h = arr
+
+    return [h, 0.0, 100.0] if l > 99.9999999
+    return [h, 0.0, 0.0] if l < 0.00000001
+
+    mx = max_safe_chroma_for(l)
+    s = c / mx * 100.0
+
+    [h, s, l]
+  end
+
   def radians_to_degrees rad
     rad * 180.0 / Math::PI
+  end
+
+  def max_chroma_for l, h
+    hrad = h / 360.0 * Math::PI * 2.0
+    lengths = []
+
+    get_bounds(l).each do |line|
+      l = length_of_ray_until_intersect(hrad, line)
+      lengths << l if l
+    end
+
+    lengths.min
+  end
+
+  def max_safe_chroma_for l
+    lengths = []
+
+    get_bounds(l).each do |m1, b1|
+      x = intersect_line_line([m1, b1], [-1.0 / m1, 0.0])
+      lengths << distance_from_pole([x, b1 + x * m1])
+    end
+
+    lengths.min
+  end
+
+  def get_bounds l
+    sub1 = ((l + 16.0) ** 3.0) / 1560896.0
+    sub2 = sub1 > EPSILON ? sub1 : l / KAPPA
+    ret = []
+
+    M.each do |m1, m2, m3|
+      [0, 1].each do |t|
+        top1 = (284517.0 * m1 - 94839.0 * m3) * sub2
+        top2 = (838422.0 * m3 + 769860.0 * m2 + 731718.0 * m1) * l * sub2 - 769860.0 * t * l
+        bottom = (632260.0 * m3 - 126452.0 * m2) * sub2 + 126452.0 * t
+        ret << [top1 / bottom, top2 / bottom]
+      end
+    end
+
+    ret
+  end
+
+  def length_of_ray_until_intersect theta, line
+    m1, b1 = line
+    length = b1 / (Math.sin(theta) - m1 * Math.cos(theta))
+    return nil if length < 0
+    length
+  end
+
+  def intersect_line_line line1, line2
+    (line1[1] - line2[1]) / (line2[0] - line1[0])
+  end
+
+  def distance_from_pole point
+    Math.sqrt(point[0] ** 2 + point[1] ** 2)
   end
 
   def f t

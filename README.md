@@ -1,8 +1,6 @@
 # Husl
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/husl`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A Ruby implementation of [HUSL](http://www.husl-colors.org).
 
 ## Installation
 
@@ -22,18 +20,24 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+**husl_to_hex(hue, saturation, lightness)**
 
-## Development
+`hue` is a float between 0 and 360, `saturation` and `lightness` are floats between 0 and 100. This function returns the resulting color as a hex string.
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
+**husl_to_rgb(hue, saturation, lightness)**
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+Like above, but returns a list of 3 floats between 0 and 1, for each RGB channel.
 
-## Contributing
+**hex_to_husl(hex)**
 
-1. Fork it ( https://github.com/[my-github-username]/husl/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+Takes a hex string and returns the HUSL color as a list of floats as defined above.
+
+**rgb_to_husl(red, green, blue)**
+
+Like above, but `red`, `green` and `blue` are passed as floats between 0 and 1.
+
+For HUSLp (the pastel variant), use `huslp_to_hex`, `huslp_to_rgb`, `hex_to_huslp` and `rgb_to_huslp`.
+
+## Testing
+
+Run `rspec spec/`.
