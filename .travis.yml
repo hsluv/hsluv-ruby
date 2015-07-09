@@ -1,3 +1,13 @@
 language: ruby
+cache: bundler
 rvm:
-  - 2.1.5
+  - 2.2.1
+
+script: 'bundle exec rspec'
+
+notifications:
+  email:
+    recipients:
+      - croitoruradubogdan@gmail.com
+    on_failure: change
+    on_success: never
