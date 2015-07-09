@@ -68,11 +68,11 @@ describe Husl do
 
         # Others
         it "from husl to hex" do
-          expect(deviation(Husl.husl_to_hex(test_husl), hex)).to eq true
+          expect(Husl.husl_to_hex(*test_husl)).to eq hex
         end
 
         it "from huslp to hex" do
-          expect(deviation(Husl.huslp_to_hex(test_huslp), hex)).to eq true
+          expect(Husl.huslp_to_hex(*test_huslp)).to eq hex
         end
 
         it "from hex to husl" do

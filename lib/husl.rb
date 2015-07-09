@@ -23,6 +23,59 @@ module Husl
   KAPPA = 903.2962962
   EPSILON = 0.0088564516
 
+  ###
+
+  def husl_to_hex h, s, l
+    rgb_to_hex(*husl_to_rgb(h, s, l))
+  end
+
+  def huslp_to_hex h, s, l
+    rgb_to_hex(*huslp_to_rgb(h, s, l))
+  end
+
+  def hex_to_husl hex
+    rgb_to_husl(*hex_to_rgb(hex))
+  end
+
+  def hex_to_huslp hex
+    rgb_to_huslp(*hex_to_rgb(hex))
+  end
+
+  def husl_to_rgb h, s, l
+    xyz_to_rgb(luv_to_xyz(lch_to_luv(husl_to_lch([h, s, l]))))
+  end
+
+  def rgb_to_husl r, g, b
+    lch_to_husl(rgb_to_lch(r, g, b))
+  end
+
+  def huslp_to_rgb h, s, l
+    lch_to_rgb(*huslp_to_lch([h, s, l]))
+  end
+
+  def rgb_to_huslp r, g, b
+    lch_to_huslp(rgb_to_lch(r, g, b))
+  end
+
+  def lch_to_rgb l, c, h
+    xyz_to_rgb(luv_to_xyz(lch_to_luv([l, c, h])))
+  end
+
+  def rgb_to_lch r, g, b
+    luv_to_lch(xyz_to_luv(rgb_to_xyz([r, g, b])))
+  end
+
+  def rgb_to_hex r, g, b
+    "#%02x%02x%02x" % rgb_prepare([r, g, b])
+  end
+
+  def hex_to_rgb hex
+    hex = hex.tr("#", "")
+    [].tap { |arr| hex.split('').each_slice(2) { |block| arr << block.join.to_i(16) / 255.0 } }
+  end
+
+  ###
+
   def rgb_to_xyz arr
     rgbl = arr.map { |val| to_linear(val) }
     M_INV.map { |i| dot_product(i, rgbl) }
@@ -74,8 +127,72 @@ module Husl
     [h, s, l]
   end
 
+  ###
+
+  def xyz_to_rgb arr
+    xyz = M.map { |i| dot_product(i, arr) }
+    xyz.map { |i| from_linear(i) }
+  end
+
+  def luv_to_xyz arr
+    l, u, v = arr
+
+    return [0.0, 0.0, 0.0] if l == 0
+
+    var_y = f_inv(l)
+    var_u = u / (13.0 * l) + REF_U
+    var_v = v / (13.0 * l) + REF_V
+
+
+    y = var_y * REF_Y
+    x = 0.0 - (9.0 * y * var_u) / ((var_u - 4.0) * var_v - var_u * var_v)
+    z = (9.0 * y - (15.0 * var_v * y) - (var_v * x)) / (3.0 * var_v)
+
+    [x, y, z]
+  end
+
+  def lch_to_luv arr
+    l, c, h = arr
+
+    hrad = degrees_to_radians(h)
+    u = Math.cos(hrad) * c
+    v = Math.sin(hrad) * c
+
+    [l, u, v]
+  end
+
+  def husl_to_lch arr
+    h, s, l = arr
+
+    return [100, 0.0, h] if l > 99.9999999
+    return [0.0, 0.0, h] if l < 0.00000001
+
+    mx = max_chroma_for(l, h)
+    c = mx / 100.0 * s
+
+    [l, c, h]
+  end
+
+  def huslp_to_lch arr
+    h, s, l = arr
+
+    return [100, 0.0, h] if l > 99.9999999
+    return [0.0, 0.0, h] if l < 0.00000001
+
+    mx = max_safe_chroma_for(l)
+    c = mx / 100.0 * s
+
+    [l, c, h]
+  end
+
+  ###
+
   def radians_to_degrees rad
     rad * 180.0 / Math::PI
+  end
+
+  def degrees_to_radians degrees
+    degrees * Math::PI / 180.0
   end
 
   def max_chroma_for l, h
@@ -137,11 +254,23 @@ module Husl
     t > EPSILON ? 116 * ((t / REF_Y) ** (1.0 / 3.0)) - 16.0 : t / REF_Y * KAPPA
   end
 
+  def f_inv t
+    t > 8 ? REF_Y * ((t + 16.0) / 116.0) ** 3.0 : REF_Y * t / KAPPA
+  end
+
   def to_linear c
     c > 0.04045 ? ((c + 0.055) / 1.055) ** 2.4 : c / 12.92
   end
 
+  def from_linear c
+    c <= 0.0031308 ? 12.92 * c : (1.055 * (c ** (1.0 / 2.4)) - 0.055)
+  end
+
   def dot_product a, b
     a.zip(b).map { |i, j| i * j }.inject(:+)
+  end
+
+  def rgb_prepare arr
+    arr.map! { |ch| ch = ch.round(3); ch = [0, ch].max; ch = [1, ch].min; (ch * 255).round }
   end
 end
