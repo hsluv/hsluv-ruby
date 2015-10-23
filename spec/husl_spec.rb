@@ -1,11 +1,8 @@
+require 'helpers'
 require 'spec_helper'
 require 'json'
 
 describe Husl do
-
-  def deviation a, b
-    a.zip(b).map! { |group|  group.inject(:-).abs < 1e-11 }.uniq == [true]
-  end
 
   describe 'snapshot' do
     snapshot = JSON.parse(File.read("spec/fixtures/snapshot-rev3.json"))
