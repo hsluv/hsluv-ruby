@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/husl-colors/husl-ruby.svg?branch=v0.1.0)](https://travis-ci.org/radubogdan/husl)
+[![Build Status](https://travis-ci.org/husl-colors/husl-ruby.svg)](https://travis-ci.org/husl-colors/husl-ruby)
 [![Gem Version](https://badge.fury.io/rb/husl.svg)](http://badge.fury.io/rb/husl)
 
 A Ruby implementation of [HUSL](http://www.husl-colors.org).
