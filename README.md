@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/hsluv/hsluv-ruby.svg)](https://travis-ci.org/hsluv-colors/hsluv-ruby)
+[![Build Status](https://travis-ci.org/hsluv/hsluv-ruby.svg)](https://travis-ci.org/hsluv/hsluv-ruby)
 [![Gem Version](https://badge.fury.io/rb/hsluv.svg)](http://badge.fury.io/rb/hsluv)
 
 A Ruby implementation of [HSLuv](http://www.hsluv.org).
@@ -7,7 +7,7 @@ A Ruby implementation of [HSLuv](http://www.hsluv.org).
 
 ![Demo](http://i.imgur.com/GTsNT8u.gif)
 
-Demo link: http://www.hsluv-colors.org/syntax/#006925
+Demo link: http://www.hsluv.org/syntax/#006925
 
 ## Installation
 
