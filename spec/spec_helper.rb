@@ -4,4 +4,4 @@ RSpec.configure do |c|
   c.include Helpers
 end
 
-require 'husl'
+require 'hsluv'
