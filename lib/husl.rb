@@ -1,5 +1,7 @@
 require "husl/version"
 
+warn "[DEPRECATION] This gem has been renamed to hsluv and will no longer be supported."
+
 module Husl
   extend self
 
