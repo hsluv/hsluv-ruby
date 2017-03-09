@@ -11,6 +11,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/hsluv/hsluv-ruby'
   spec.license       = 'MIT'
 
+  spec.files = Dir['lib/**/*']
   spec.require_paths = ['lib']
 
   spec.add_development_dependency 'bundler', '~> 1.8'
