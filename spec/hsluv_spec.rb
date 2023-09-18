@@ -5,7 +5,7 @@ require 'json'
 describe Hsluv do
 
   describe 'snapshot' do
-    snapshot = JSON.parse(File.read('spec/fixtures/snapshot-rev3.json'))
+    snapshot = JSON.parse(File.read('spec/fixtures/snapshot-rev4.json'))
 
     snapshot.each do |block|
       hex = block.first

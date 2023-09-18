@@ -95,10 +95,18 @@ module Hsluv
 
   def luv_to_lch (arr)
     l, u, v = arr
-    c = ((u ** 2) + (v ** 2)) ** (1 / 2.0)
-    hrad = Math.atan2(v, u)
-    h = radians_to_degrees(hrad)
-    h += 360.0 if h < 0.0
+
+    c = Math.sqrt(u * u + v * v)
+
+    h = if c < 0.00000001
+      0.0
+    else
+      hrad = Math.atan2(v, u)
+      h = hrad * 180.0 / Math::PI
+      h += 360.0 if h < 0.0
+      h
+    end
+
     [l, c, h]
   end
 
