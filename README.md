@@ -3,10 +3,6 @@
 
 A Ruby implementation of [HSLuv](https://www.hsluv.org).
 
-## Demo
-
-![Demo](http://i.imgur.com/GTsNT8u.gif)
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -35,28 +31,28 @@ Or install it yourself as:
 
 #### Hsluv::hsluv_to_hex(hue, saturation, lightness) -> color as a hex string
 
-```
+```ruby
 Hsluv.hsluv_to_hex(12.177, 100, 53.23)
 => #ff0000
 ```
 
 #### Hsluv::hsluv_to_rgb(hue, saturation, lightness) -> color as rgb
 
-```
+```ruby
 Hsluv.hsluv_to_rgb(12.177, 100, 53.23)
 => [0.9998643703868711, 6.849859221502719e-14, 8.791283550555612e-06]
 ```
 
 #### Hsluv::hex_to_hsluv(hex) -> list of floats as defined above
 
-```
+```ruby
 Hsluv.hex_to_hsluv("#ff0000")
 => [12.177050630061776, 100.0000000000022, 53.23711559542933]
 ```
 
 #### Hsluv::rgb_to_hsluv(rgb) -> list of floats as defined above
 
-```
+```ruby
 Hsluv.rgb_to_hsluv(0.99, 6.84e-14, 8.79e-16)
 => [12.17705063006216, 100.00000000000209, 52.711595266911985]
 ```
@@ -68,14 +64,24 @@ For HPLuv (the pastel variant), use:
 - `hex_to_hpluv`
 - `rgb_to_hpluv`
 
-## Testing
+## Local workflow
 
-Run `rspec spec/`.
+If you don't have Ruby installed already, I recommend using our [devcontainer.json](.devcontainer/devcontainer.json) configuration to launch your editor in a pre-built Ruby container. Also consider using GitHub "Codespaces" feature if you don't use Docker.
 
-## Contributing
+Initial setup:
 
-1. Fork it ( https://github.com/hsluv/hsluv-ruby/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+```bash
+bundle install
+```
+
+Test:
+
+```bash
+bundle exec rspec
+```
+
+## Releasing a new version
+
+1. Log in to [rubygems.org](https://rubygems.org/) using our shared [hsluv](https://rubygems.org/profiles/hsluv) profile
+2. Make a new API key if necessary, copy it to GitHub Actions `HSLUV_RUBYGEMS_API_KEY` secret
+3. Run [gem.yml](./github/workflows/gem.yml)

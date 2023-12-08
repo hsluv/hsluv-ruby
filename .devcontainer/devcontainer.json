@@ -1,4 +1,11 @@
 {
 	"name": "Ruby",
-	"image": "mcr.microsoft.com/devcontainers/ruby:1-3.0-bullseye"
+	"image": "mcr.microsoft.com/devcontainers/ruby:1-3.0-bullseye",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"github.vscode-github-actions"
+			]
+		}
+	}
 }
