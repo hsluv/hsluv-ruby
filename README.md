@@ -1,13 +1,11 @@
-[![Build Status](https://travis-ci.org/hsluv/hsluv-ruby.svg)](https://travis-ci.org/hsluv/hsluv-ruby)
-[![Gem Version](https://badge.fury.io/rb/hsluv.svg)](http://badge.fury.io/rb/hsluv)
+[![Ruby](https://github.com/hsluv/hsluv-ruby/actions/workflows/ruby.yml/badge.svg)](https://github.com/hsluv/hsluv-ruby/actions/workflows/ruby.yml)
+[![Gem Version](https://img.shields.io/gem/v/hsluv.svg)](https://rubygems.org/gems/hsluv)
 
-A Ruby implementation of [HSLuv](http://www.hsluv.org).
+A Ruby implementation of [HSLuv](https://www.hsluv.org).
 
 ## Demo
 
 ![Demo](http://i.imgur.com/GTsNT8u.gif)
-
-Demo link: http://www.hsluv.org/syntax/#006925
 
 ## Installation
 
@@ -65,10 +63,10 @@ Hsluv.rgb_to_hsluv(0.99, 6.84e-14, 8.79e-16)
 
 For HPLuv (the pastel variant), use:
 
-  - `hpluv_to_hex`
-  - `hpluv_to_rgb`
-  - `hex_to_hpluv`
-  - `rgb_to_hpluv`
+- `hpluv_to_hex`
+- `hpluv_to_rgb`
+- `hex_to_hpluv`
+- `rgb_to_hpluv`
 
 ## Testing
 
