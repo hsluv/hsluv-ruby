@@ -84,4 +84,12 @@ bundle exec rspec
 
 1. Log in to [rubygems.org](https://rubygems.org/) using our shared [hsluv](https://rubygems.org/profiles/hsluv) profile
 2. Make a new API key if necessary, copy it to GitHub Actions `HSLUV_RUBYGEMS_API_KEY` secret
-3. Run [gem.yml](./github/workflows/gem.yml)
+3. Update [hsluv.gemspec](./hsluv.gemspec) with new version, e.g. `1.0.2.rc1`, push to a branch
+4. Run [gem.yml workflow](https://github.com/hsluv/hsluv-ruby/actions/workflows/gem.yml) on that branch
+5. Sanity check: `gem install --user-install hsluv -v 1.0.2.rc1`
+
+## Version history
+
+1.0.2
+
+- Add HSLuv revision 4 support (thanks @felix-d)

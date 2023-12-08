@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = 'hsluv'
-  spec.version       = '1.0.2.rc1'
+  spec.version       = '1.0.2'
   spec.authors       = ['Radu-Bogdan Croitoru', 'HSLuv Contributors']
   spec.email         = ['croitoruradubogdan@gmail.com', 'contributors@hsluv.org']
 
